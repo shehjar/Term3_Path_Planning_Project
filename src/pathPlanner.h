@@ -14,6 +14,7 @@ class pathPlanner{
     vector<double> map_waypoints_x, map_waypoints_y, map_waypoints_s, map_waypoints_d;
     vector<car> vehicles;
     car ego;
+    vector<double> previous_path_x, previous_path_y;
 
     // Member functions
     void generate_trajectory(vector<double>& next_x_vals, vector<double>& next_y_vals);
