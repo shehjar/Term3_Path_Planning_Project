@@ -123,6 +123,33 @@ path_planning/fast:
 	$(MAKE) -f CMakeFiles/path_planning.dir/build.make CMakeFiles/path_planning.dir/build
 .PHONY : path_planning/fast
 
+src/car.o: src/car.cpp.o
+
+.PHONY : src/car.o
+
+# target to build an object file
+src/car.cpp.o:
+	$(MAKE) -f CMakeFiles/path_planning.dir/build.make CMakeFiles/path_planning.dir/src/car.cpp.o
+.PHONY : src/car.cpp.o
+
+src/car.i: src/car.cpp.i
+
+.PHONY : src/car.i
+
+# target to preprocess a source file
+src/car.cpp.i:
+	$(MAKE) -f CMakeFiles/path_planning.dir/build.make CMakeFiles/path_planning.dir/src/car.cpp.i
+.PHONY : src/car.cpp.i
+
+src/car.s: src/car.cpp.s
+
+.PHONY : src/car.s
+
+# target to generate assembly for a file
+src/car.cpp.s:
+	$(MAKE) -f CMakeFiles/path_planning.dir/build.make CMakeFiles/path_planning.dir/src/car.cpp.s
+.PHONY : src/car.cpp.s
+
 src/main.o: src/main.cpp.o
 
 .PHONY : src/main.o
@@ -150,6 +177,33 @@ src/main.cpp.s:
 	$(MAKE) -f CMakeFiles/path_planning.dir/build.make CMakeFiles/path_planning.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/pathPlanner.o: src/pathPlanner.cpp.o
+
+.PHONY : src/pathPlanner.o
+
+# target to build an object file
+src/pathPlanner.cpp.o:
+	$(MAKE) -f CMakeFiles/path_planning.dir/build.make CMakeFiles/path_planning.dir/src/pathPlanner.cpp.o
+.PHONY : src/pathPlanner.cpp.o
+
+src/pathPlanner.i: src/pathPlanner.cpp.i
+
+.PHONY : src/pathPlanner.i
+
+# target to preprocess a source file
+src/pathPlanner.cpp.i:
+	$(MAKE) -f CMakeFiles/path_planning.dir/build.make CMakeFiles/path_planning.dir/src/pathPlanner.cpp.i
+.PHONY : src/pathPlanner.cpp.i
+
+src/pathPlanner.s: src/pathPlanner.cpp.s
+
+.PHONY : src/pathPlanner.s
+
+# target to generate assembly for a file
+src/pathPlanner.cpp.s:
+	$(MAKE) -f CMakeFiles/path_planning.dir/build.make CMakeFiles/path_planning.dir/src/pathPlanner.cpp.s
+.PHONY : src/pathPlanner.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -159,9 +213,15 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... path_planning"
+	@echo "... src/car.o"
+	@echo "... src/car.i"
+	@echo "... src/car.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/pathPlanner.o"
+	@echo "... src/pathPlanner.i"
+	@echo "... src/pathPlanner.s"
 .PHONY : help
 
 
