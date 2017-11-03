@@ -2,22 +2,28 @@
 #define PATHPLANNER_H
 
 #include<iostream>
+#include<fstream>
 #include<cmath>
 #include<string>
 #include<vector>
 #include<map>
 #include "car.h"
 #include "helper.h"
+#include "json.hpp"
+
+using json = nlohmann::json;
 
 class pathPlanner{
   public:
-    vector<double> map_waypoints_x, map_waypoints_y, map_waypoints_s, map_waypoints_d;
-    vector<car> vehicles;
+    std::vector<double> map_waypoints_x, map_waypoints_y, map_waypoints_s, map_waypoints_dx, map_waypoints_dy;
+    std::vector<car> vehicles;
     car ego;
-    vector<double> previous_path_x, previous_path_y;
+    json previous_path_x, previous_path_y;
 
     // Member functions
+    pathPlanner(){ego.v = 0;}
+    ~pathPlanner(){}
     void generate_trajectory(vector<double>& next_x_vals, vector<double>& next_y_vals);
-    void populateMapWaypoints(string path);
+    void PopulatingMapWaypoints(string path);
 };
 #endif

@@ -31,7 +31,7 @@ void car::InitVariables(double car_x, double car_y, double car_yaw, double car_s
   x = car_x;
   y = car_y;
   yaw = car_yaw;
-  v = car_speed;
+  //v = car_speed;
   vx = v*cos(deg2rad(yaw));
   vy = v*sin(deg2rad(yaw));
   ref_v = ref_vel;

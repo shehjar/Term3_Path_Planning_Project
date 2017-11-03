@@ -1,4 +1,32 @@
 #include "pathPlanner.h"
+#include<fstream>
+#include<sstream>
+#include<string>
+#include<vector>
+
+void pathPlanner::PopulatingMapWaypoints(string folderpath){
+  ifstream in_map_(folderpath.c_str(), ifstream::in);
+
+  string line;
+  while (getline(in_map_, line)) {
+  	istringstream iss(line);
+  	double x;
+  	double y;
+  	float s;
+  	float d_x;
+  	float d_y;
+  	iss >> x;
+  	iss >> y;
+  	iss >> s;
+  	iss >> d_x;
+  	iss >> d_y;
+    map_waypoints_x.push_back(x);
+    map_waypoints_y.push_back(y);
+    map_waypoints_s.push_back(s);
+    map_waypoints_dx.push_back(d_x);
+    map_waypoints_dy.push_back(d_y);
+  }
+}
 
 void pathPlanner::generate_trajectory(vector<double>& next_x_vals, 
     vector<double>& next_y_vals){
