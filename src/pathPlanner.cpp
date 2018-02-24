@@ -3,6 +3,7 @@
 #include<sstream>
 #include<string>
 #include<vector>
+#include<algorithm>
 
 void pathPlanner::PopulatingMapWaypoints(string folderpath){
   ifstream in_map_(folderpath.c_str(), ifstream::in);
@@ -26,6 +27,7 @@ void pathPlanner::PopulatingMapWaypoints(string folderpath){
     map_waypoints_dx.push_back(d_x);
     map_waypoints_dy.push_back(d_y);
   }
+  coord.SetMaps(map_waypoints_x, map_waypoints_y, map_waypoints_s, map_waypoints_dx, map_waypoints_dy);
 }
 
 void pathPlanner::generate_trajectory(vector<double>& next_x_vals, 
@@ -69,12 +71,9 @@ void pathPlanner::generate_trajectory(vector<double>& next_x_vals,
   }
 
   // In frenet add evenly 30m spaced points ahead of the starting reference
-  vector<double> next_wp0 = getXY(ego.s + 30,(2+4*lane), map_waypoints_s, 
-      map_waypoints_x, map_waypoints_y);
-  vector<double> next_wp1 = getXY(ego.s + 60,(2+4*lane), map_waypoints_s, 
-      map_waypoints_x, map_waypoints_y);
-  vector<double> next_wp2 = getXY(ego.s + 90,(2+4*lane), map_waypoints_s, 
-      map_waypoints_x, map_waypoints_y);
+  vector<double> next_wp0 = coord.getXY(ego.s + 30,(2+4*lane));
+  vector<double> next_wp1 = coord.getXY(ego.s + 60,(2+4*lane));
+  vector<double> next_wp2 = coord.getXY(ego.s + 90,(2+4*lane));
           
   ptsx.push_back(next_wp0[0]);
   ptsx.push_back(next_wp1[0]);
@@ -130,3 +129,101 @@ void pathPlanner::generate_trajectory(vector<double>& next_x_vals,
   }
 }
 
+void pathPlanner::map2carCoord(vector<double>& ptsx, vector<double>& ptsy, vector<double> ref_state) {
+	// shifting the coordinates to the Car coordinates
+	double ref_x = ref_state[0];
+	double ref_y = ref_state[1];
+	double ref_yaw = ref_state[2];
+
+	for (size_t i = 0; i < ptsx.size(); i++) {
+		// shift car reference angle to 0 degrees
+		double shift_x = ptsx[i] - ref_x;
+		double shift_y = ptsy[i] - ref_y;
+
+		ptsx[i] = shift_x * cos(0 - ref_yaw) - shift_y * sin(0 - ref_yaw);
+		ptsy[i] = shift_x * sin(0 - ref_yaw) + shift_y * cos(0 - ref_yaw);
+	}
+}
+void pathPlanner::UpdateSpeed(bool too_close) {
+	if (too_close)
+		ego.UpdateSpeed(-0.4);
+	else if (ego.v < ego.ref_v)
+		ego.UpdateSpeed(0.4);
+}
+
+void pathPlanner::UpdatingVehicles(json& sensor_fusion) {
+	for (auto& i : sensor_fusion) {
+		// check if the car is within reach of Ego- around
+		// 80 m radius
+		vector<int> car_ids;
+		double car_s = i[5];
+		if (fabs(car_s - ego.s) < 80) {
+			car new_car;
+			new_car.InitVariables(i);
+			car_ids.push_back(new_car.id);
+			//check if the vehicle list is empty
+			if (vehicles.empty())
+				vehicles.emplace_back(new_car);
+			else {
+				// Check if the car is already in the list
+				int id = new_car.id;
+				auto predicate = [&id](const car& obj) {return obj.id == id; };
+				auto foundCar = find_if(vehicles.begin(), vehicles.end(), predicate);
+				if (foundCar != vehicles.end())
+					foundCar->UpdateVariables(&new_car);
+				else
+					vehicles.emplace_back(new_car);
+			}
+		}
+	}
+	// remove Vehicles which are away (>80 m) from ego!
+	CleanUpVehicles();
+	// cout << "Vehicles added:" << vehicles.size() << endl;
+	// Collision Detection? No, not in Updating Vehicles
+}
+
+void pathPlanner::CleanUpVehicles() {
+	double s = ego.s;
+	auto predicate = [&s](const car& obj) {return fabs(obj.s - s) > 80; };
+	vehicles.erase(std::remove_if(vehicles.begin(), vehicles.end(), predicate), vehicles.end());
+}
+
+void pathPlanner::InitEgo(json& j) {
+	// Main car's localization Data
+	double car_x = j[1]["x"];
+	double car_y = j[1]["y"];
+	double car_s = j[1]["s"];
+	double car_d = j[1]["d"];
+	double car_yaw = j[1]["yaw"];
+	//double car_speed = j[1]["speed"];
+	// Previous path data given to the Planner
+	auto prev_path_x = j[1]["previous_path_x"];
+	auto prev_path_y = j[1]["previous_path_y"];
+	// Previous path's end s and d values 
+	double end_path_s = j[1]["end_path_s"];
+	double end_path_d = j[1]["end_path_d"];
+	// Minor adjustments and initializations
+	previous_path_x = prev_path_x;
+	previous_path_y = prev_path_y;
+	int prev_size = previous_path_x.size();
+	if (prev_size > 0) {
+		car_s = end_path_s;
+		ego.UpdateVariables(car_x, car_y, car_yaw, car_s, car_d);
+	}
+	else {
+		// Initializing Ego for the first time
+		ego.InitVariables(car_x, car_y, car_yaw, car_s, car_d, ref_vel);
+	}
+}
+
+void pathPlanner::InitializeAndUpdate(json& j) {
+	// Localizing main car
+	InitEgo(j);
+	// Getting Vehicles data from sensor fusion
+	auto sensor_fusion = j[1]["sensor_fusion"];
+	UpdatingVehicles(sensor_fusion);
+}
+
+void pathPlanner::DetectingCollision() {
+
+}

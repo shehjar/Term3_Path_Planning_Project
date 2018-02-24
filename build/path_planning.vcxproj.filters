@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\kauls\Documents\Self_Driving_Car\Term3_Path_Planning_Project\src\car.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\kauls\Documents\Self_Driving_Car\Term3_Path_Planning_Project\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\kauls\Documents\Self_Driving_Car\Term3_Path_Planning_Project\src\pathPlanner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\CoordinateTransform.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\kauls\Documents\Self_Driving_Car\Term3_Path_Planning_Project\src\Predict.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\kauls\Documents\Self_Driving_Car\Term3_Path_Planning_Project\src\car.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\kauls\Documents\Self_Driving_Car\Term3_Path_Planning_Project\src\helper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\kauls\Documents\Self_Driving_Car\Term3_Path_Planning_Project\src\pathPlanner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\kauls\Documents\Self_Driving_Car\Term3_Path_Planning_Project\src\spline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\CoordinateTransform.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\kauls\Documents\Self_Driving_Car\Term3_Path_Planning_Project\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{92F8E623-F004-34C8-B221-269373CE7474}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{2BAF11F5-324B-3971-8806-12ED4E3217B5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

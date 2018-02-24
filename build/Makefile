@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/shehjar/Self-Driving-Car/Term3/CarND-Path-Planning-Project
+CMAKE_SOURCE_DIR = /mnt/c/Users/kauls/Documents/Self_Driving_Car/Term3_Path_Planning_Project
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/shehjar/Self-Driving-Car/Term3/CarND-Path-Planning-Project/build
+CMAKE_BINARY_DIR = /mnt/c/Users/kauls/Documents/Self_Driving_Car/Term3_Path_Planning_Project/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/shehjar/Self-Driving-Car/Term3/CarND-Path-Planning-Project/build/CMakeFiles /home/shehjar/Self-Driving-Car/Term3/CarND-Path-Planning-Project/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/kauls/Documents/Self_Driving_Car/Term3_Path_Planning_Project/build/CMakeFiles /mnt/c/Users/kauls/Documents/Self_Driving_Car/Term3_Path_Planning_Project/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/shehjar/Self-Driving-Car/Term3/CarND-Path-Planning-Project/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/kauls/Documents/Self_Driving_Car/Term3_Path_Planning_Project/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -122,6 +122,33 @@ path_planning: cmake_check_build_system
 path_planning/fast:
 	$(MAKE) -f CMakeFiles/path_planning.dir/build.make CMakeFiles/path_planning.dir/build
 .PHONY : path_planning/fast
+
+src/CoordinateTransform.o: src/CoordinateTransform.cpp.o
+
+.PHONY : src/CoordinateTransform.o
+
+# target to build an object file
+src/CoordinateTransform.cpp.o:
+	$(MAKE) -f CMakeFiles/path_planning.dir/build.make CMakeFiles/path_planning.dir/src/CoordinateTransform.cpp.o
+.PHONY : src/CoordinateTransform.cpp.o
+
+src/CoordinateTransform.i: src/CoordinateTransform.cpp.i
+
+.PHONY : src/CoordinateTransform.i
+
+# target to preprocess a source file
+src/CoordinateTransform.cpp.i:
+	$(MAKE) -f CMakeFiles/path_planning.dir/build.make CMakeFiles/path_planning.dir/src/CoordinateTransform.cpp.i
+.PHONY : src/CoordinateTransform.cpp.i
+
+src/CoordinateTransform.s: src/CoordinateTransform.cpp.s
+
+.PHONY : src/CoordinateTransform.s
+
+# target to generate assembly for a file
+src/CoordinateTransform.cpp.s:
+	$(MAKE) -f CMakeFiles/path_planning.dir/build.make CMakeFiles/path_planning.dir/src/CoordinateTransform.cpp.s
+.PHONY : src/CoordinateTransform.cpp.s
 
 src/car.o: src/car.cpp.o
 
@@ -213,6 +240,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... path_planning"
+	@echo "... src/CoordinateTransform.o"
+	@echo "... src/CoordinateTransform.i"
+	@echo "... src/CoordinateTransform.s"
 	@echo "... src/car.o"
 	@echo "... src/car.i"
 	@echo "... src/car.s"

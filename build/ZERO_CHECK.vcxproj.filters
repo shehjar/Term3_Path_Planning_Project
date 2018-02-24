@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\kauls\Documents\Self_Driving_Car\Term3_Path_Planning_Project\build\CMakeFiles\8f0e71d024b629416a5dc7ccb5a6ab69\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{778FA939-6D0A-36FE-B2AE-75AAA512A181}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
