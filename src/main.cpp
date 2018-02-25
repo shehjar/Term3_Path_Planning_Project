@@ -30,28 +30,12 @@ string hasData(string s) {
   return "";
 }
 
-double time_step(chrono::high_resolution_clock::time_point& start) {
-	auto stop = chrono::high_resolution_clock::now();
-	chrono::duration<double> elapsed = start - stop;
-	start = chrono::high_resolution_clock::now();
-	return elapsed.count();
-}
-
 int main() {
   uWS::Hub h;
   pathPlanner planner;
   // Waypoint map to read from
   string map_file_ = "../data/highway_map.csv";
   planner.PopulatingMapWaypoints(map_file_);
-  
-  // Starting lane
-  // int lane = 1;
-
-  // reference velocity
-  // double ref_vel = 49.5;  //mph 
-
-  // Starting time
-  //auto start = chrono::high_resolution_clock::now();
 
   h.onMessage([&planner](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length,
                      uWS::OpCode opCode) {
@@ -61,64 +45,19 @@ int main() {
     //auto sdata = string(data).substr(0, length);
     //cout << sdata << endl;
     if (length && length > 2 && data[0] == '4' && data[1] == '2') {
-
       auto s = hasData(data);
-
       if (s != "") {
         auto j = json::parse(s);
-        
         string event = j[0].get<string>();
-        
         if (event == "telemetry") {
-			// j[1] is the data JSON object
-          
 			// Main car's localization Data
 			// Initialize Ego
 			planner.InitializeAndUpdate(j);
-			// Sensor Fusion Data, a list of all other cars on the same side of the road.
-			auto sensor_fusion = j[1]["sensor_fusion"];
-          
-          bool too_close = false;
-		  int lane = planner.ego.lane;
-		  double prev_size = planner.previous_path_x.size();
-		  double car_s = planner.ego.s;
-          //double const_vel = ref_vel;
-          //std::cout<<"Sensor fusion says there are "<<sensor_fusion.size()<<" cars"<<std::endl;
-          // find ref_x to use
-          for(size_t i = 0; i < sensor_fusion.size(); i++){
-            // check if car is in my lane
-            float d = sensor_fusion[i][6];
-            //std::cout<<"Car "<<
-            if (d < (4 + 4*lane) && d > (4*lane)){
-              double vx = sensor_fusion[i][3];
-              double vy = sensor_fusion[i][4];
-              double check_speed = sqrt(vx*vx + vy*vy);
-              double check_car_s = sensor_fusion[i][5];
-
-              check_car_s += (double)prev_size*0.02*check_speed;
-              if((check_car_s > car_s) && ((check_car_s - car_s) < 50) && (check_speed < planner.ego.v)){
-                // Do some logic here, lower reference velocity so we don't crash in front of us, could 
-                //also flag to change lanes.
-				  /*cout << "Car in front speed: " << check_speed << endl;
-				  cout << "Ego Speed: " << planner.ego.v<<endl;
-				  cout << "Distance between car and ego: " << check_car_s - car_s << endl;*/
-                too_close = true;
-                //const_vel = check_speed;
-                break;
-              }
-            }
-          }
-		  planner.UpdateSpeed(too_close);
-          /*if(too_close)
-            //ref_vel -= 0.224;
-            planner.ego.v -= 0.224;
-          else if(planner.ego.v < planner.ego.ref_v)
-            planner.ego.v += 0.224;*/
+			// Detect Collision and act accordingly
+			planner.DetectingCollision();
           // change the value of lane to change the trajectory below--
-          // TODO: define a path made up of (x,y) points that the car will visit sequentially every .02 seconds
+          // define a path made up of (x,y) points that the car will visit sequentially every .02 seconds
           vector<double> next_x_vals, next_y_vals;
-          //vector<double> car_state = {car_x, car_y, car_yaw, lane};
-
           planner.generate_trajectory(next_x_vals, next_y_vals);
           
           json msgJson;

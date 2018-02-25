@@ -92,3 +92,10 @@ void car::UpdateVariables(double& car_x, double& car_y, double& car_yaw, double&
 	d = car_d;
 	lane = (int)d / 4;
 }
+
+void car::PrintState() {
+	cout << "State for car id: " << id <<" is given below"<< endl;
+	cout << "x: " << x << " y: " << y << " s: " << s << " d: " << d << endl;
+	cout << "v: " << v << " a: " << a << " yaw: " << yaw << endl;
+	cout << "lane: " << lane << " target_lane: " << target_lane << endl;
+}

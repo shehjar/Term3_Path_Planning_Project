@@ -34,6 +34,7 @@ class car{
 	void UpdateSpeed(double val);
 	double distFromCar(car anotherCar);
 	bool collideWithCar(car anotherCar);
+	void PrintState();
 };
 
 #endif

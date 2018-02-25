@@ -157,7 +157,7 @@ void pathPlanner::UpdatingVehicles(json& sensor_fusion) {
 		// 80 m radius
 		vector<int> car_ids;
 		double car_s = i[5];
-		if (fabs(car_s - ego.s) < 80) {
+		//if (fabs(car_s - ego.s) < 80) {
 			car new_car;
 			new_car.InitVariables(i);
 			car_ids.push_back(new_car.id);
@@ -174,10 +174,10 @@ void pathPlanner::UpdatingVehicles(json& sensor_fusion) {
 				else
 					vehicles.emplace_back(new_car);
 			}
-		}
+		//}
 	}
 	// remove Vehicles which are away (>80 m) from ego!
-	CleanUpVehicles();
+	// CleanUpVehicles();
 	// cout << "Vehicles added:" << vehicles.size() << endl;
 	// Collision Detection? No, not in Updating Vehicles
 }
@@ -189,6 +189,7 @@ void pathPlanner::CleanUpVehicles() {
 }
 
 void pathPlanner::InitEgo(json& j) {
+	// j[1] is the data JSON object
 	// Main car's localization Data
 	double car_x = j[1]["x"];
 	double car_y = j[1]["y"];
@@ -214,6 +215,7 @@ void pathPlanner::InitEgo(json& j) {
 		// Initializing Ego for the first time
 		ego.InitVariables(car_x, car_y, car_yaw, car_s, car_d, ref_vel);
 	}
+	ego.PrintState();
 }
 
 void pathPlanner::InitializeAndUpdate(json& j) {
@@ -225,5 +227,20 @@ void pathPlanner::InitializeAndUpdate(json& j) {
 }
 
 void pathPlanner::DetectingCollision() {
-
+	bool too_close = false;
+	double prev_size = previous_path_x.size();
+	for (auto& somecar : vehicles) {
+		float d = somecar.d;
+		if (d<(4 + 4 * ego.lane) && d>(4 * ego.lane)) {
+			double car_speed = somecar.v;
+			double car_s = somecar.s;
+			car_s += (double)prev_size*0.02*car_speed;
+			if ((car_s > ego.s) && (car_s - ego.s) < 50) {
+				too_close = true;
+				break;
+			}
+		}
+	}
+	// based on collision, update speed
+	UpdateSpeed(too_close);
 }
