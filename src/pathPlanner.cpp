@@ -214,6 +214,7 @@ void pathPlanner::InitEgo(json& j) {
 	else {
 		// Initializing Ego for the first time
 		ego.InitVariables(car_x, car_y, car_yaw, car_s, car_d, ref_vel);
+		ego.SetClassifier(&classifier);
 	}
 	ego.PrintState();
 }

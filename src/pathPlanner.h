@@ -11,6 +11,7 @@
 #include "spline.h"
 #include "CoordinateTransform.h"
 #include "json.hpp"
+#include "GNB.h"
 
 using json = nlohmann::json;
 const double ref_vel = 49.5;
@@ -22,6 +23,7 @@ class pathPlanner{
     car ego;
     json previous_path_x, previous_path_y;
 	CoordinateTransform coord;
+	GNB classifier;
 	enum LaneDirection {
 		left,
 		right,
@@ -35,7 +37,7 @@ class pathPlanner{
 	};
 	FSMStates CurrentState;
     // Member functions
-	pathPlanner() { CurrentState = KL; }
+	pathPlanner() { CurrentState = KL; classifier = GNB(); }
     ~pathPlanner(){}
     void generate_trajectory(vector<double>& next_x_vals, vector<double>& next_y_vals);
     void PopulatingMapWaypoints(string path);

@@ -105,9 +105,33 @@ CMakeFiles/path_planning.dir/src/CoordinateTransform.cpp.o.provides: CMakeFiles/
 CMakeFiles/path_planning.dir/src/CoordinateTransform.cpp.o.provides.build: CMakeFiles/path_planning.dir/src/CoordinateTransform.cpp.o
 
 
+CMakeFiles/path_planning.dir/src/GNB.cpp.o: CMakeFiles/path_planning.dir/flags.make
+CMakeFiles/path_planning.dir/src/GNB.cpp.o: ../src/GNB.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/kauls/Documents/Self_Driving_Car/Term3_Path_Planning_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/path_planning.dir/src/GNB.cpp.o"
+	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/path_planning.dir/src/GNB.cpp.o -c /mnt/c/Users/kauls/Documents/Self_Driving_Car/Term3_Path_Planning_Project/src/GNB.cpp
+
+CMakeFiles/path_planning.dir/src/GNB.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/path_planning.dir/src/GNB.cpp.i"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/kauls/Documents/Self_Driving_Car/Term3_Path_Planning_Project/src/GNB.cpp > CMakeFiles/path_planning.dir/src/GNB.cpp.i
+
+CMakeFiles/path_planning.dir/src/GNB.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/path_planning.dir/src/GNB.cpp.s"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/kauls/Documents/Self_Driving_Car/Term3_Path_Planning_Project/src/GNB.cpp -o CMakeFiles/path_planning.dir/src/GNB.cpp.s
+
+CMakeFiles/path_planning.dir/src/GNB.cpp.o.requires:
+
+.PHONY : CMakeFiles/path_planning.dir/src/GNB.cpp.o.requires
+
+CMakeFiles/path_planning.dir/src/GNB.cpp.o.provides: CMakeFiles/path_planning.dir/src/GNB.cpp.o.requires
+	$(MAKE) -f CMakeFiles/path_planning.dir/build.make CMakeFiles/path_planning.dir/src/GNB.cpp.o.provides.build
+.PHONY : CMakeFiles/path_planning.dir/src/GNB.cpp.o.provides
+
+CMakeFiles/path_planning.dir/src/GNB.cpp.o.provides.build: CMakeFiles/path_planning.dir/src/GNB.cpp.o
+
+
 CMakeFiles/path_planning.dir/src/main.cpp.o: CMakeFiles/path_planning.dir/flags.make
 CMakeFiles/path_planning.dir/src/main.cpp.o: ../src/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/kauls/Documents/Self_Driving_Car/Term3_Path_Planning_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/path_planning.dir/src/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/kauls/Documents/Self_Driving_Car/Term3_Path_Planning_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/path_planning.dir/src/main.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/path_planning.dir/src/main.cpp.o -c /mnt/c/Users/kauls/Documents/Self_Driving_Car/Term3_Path_Planning_Project/src/main.cpp
 
 CMakeFiles/path_planning.dir/src/main.cpp.i: cmake_force
@@ -131,7 +155,7 @@ CMakeFiles/path_planning.dir/src/main.cpp.o.provides.build: CMakeFiles/path_plan
 
 CMakeFiles/path_planning.dir/src/pathPlanner.cpp.o: CMakeFiles/path_planning.dir/flags.make
 CMakeFiles/path_planning.dir/src/pathPlanner.cpp.o: ../src/pathPlanner.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/kauls/Documents/Self_Driving_Car/Term3_Path_Planning_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/path_planning.dir/src/pathPlanner.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/kauls/Documents/Self_Driving_Car/Term3_Path_Planning_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/path_planning.dir/src/pathPlanner.cpp.o"
 	/usr/bin/c++   $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/path_planning.dir/src/pathPlanner.cpp.o -c /mnt/c/Users/kauls/Documents/Self_Driving_Car/Term3_Path_Planning_Project/src/pathPlanner.cpp
 
 CMakeFiles/path_planning.dir/src/pathPlanner.cpp.i: cmake_force
@@ -157,6 +181,7 @@ CMakeFiles/path_planning.dir/src/pathPlanner.cpp.o.provides.build: CMakeFiles/pa
 path_planning_OBJECTS = \
 "CMakeFiles/path_planning.dir/src/car.cpp.o" \
 "CMakeFiles/path_planning.dir/src/CoordinateTransform.cpp.o" \
+"CMakeFiles/path_planning.dir/src/GNB.cpp.o" \
 "CMakeFiles/path_planning.dir/src/main.cpp.o" \
 "CMakeFiles/path_planning.dir/src/pathPlanner.cpp.o"
 
@@ -165,11 +190,12 @@ path_planning_EXTERNAL_OBJECTS =
 
 path_planning: CMakeFiles/path_planning.dir/src/car.cpp.o
 path_planning: CMakeFiles/path_planning.dir/src/CoordinateTransform.cpp.o
+path_planning: CMakeFiles/path_planning.dir/src/GNB.cpp.o
 path_planning: CMakeFiles/path_planning.dir/src/main.cpp.o
 path_planning: CMakeFiles/path_planning.dir/src/pathPlanner.cpp.o
 path_planning: CMakeFiles/path_planning.dir/build.make
 path_planning: CMakeFiles/path_planning.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/c/Users/kauls/Documents/Self_Driving_Car/Term3_Path_Planning_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable path_planning"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/c/Users/kauls/Documents/Self_Driving_Car/Term3_Path_Planning_Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable path_planning"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/path_planning.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -179,6 +205,7 @@ CMakeFiles/path_planning.dir/build: path_planning
 
 CMakeFiles/path_planning.dir/requires: CMakeFiles/path_planning.dir/src/car.cpp.o.requires
 CMakeFiles/path_planning.dir/requires: CMakeFiles/path_planning.dir/src/CoordinateTransform.cpp.o.requires
+CMakeFiles/path_planning.dir/requires: CMakeFiles/path_planning.dir/src/GNB.cpp.o.requires
 CMakeFiles/path_planning.dir/requires: CMakeFiles/path_planning.dir/src/main.cpp.o.requires
 CMakeFiles/path_planning.dir/requires: CMakeFiles/path_planning.dir/src/pathPlanner.cpp.o.requires
 

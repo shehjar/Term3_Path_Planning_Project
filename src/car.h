@@ -7,6 +7,7 @@
 #include<string>
 #include<map>
 #include"CoordinateTransform.h"
+#include"GNB.h"
 //using namespace std;
 
 class car{
@@ -20,7 +21,7 @@ class car{
 		double s, d, sdot, ddot;
 		int lane; 
 	};
-
+	GNB* classifier;
 	CoordinateTransform coord;
 	// Member functions
 	car();
@@ -32,6 +33,7 @@ class car{
 	void UpdateVariables(double& car_x, double& car_y, double& car_yaw, double& car_s, double& car_d);
 	//void UpdateState(map<int,vector<prediction> > predictions);
 	void UpdateSpeed(double val);
+	void SetClassifier(GNB* predictor) { classifier = predictor; }
 	double distFromCar(car anotherCar);
 	bool collideWithCar(car anotherCar);
 	void PrintState();

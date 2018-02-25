@@ -5,6 +5,7 @@ using namespace std;
 
 car::car(){
   v = 0;
+  classifier = nullptr;
 }
 
 car::car(const car& somecar){

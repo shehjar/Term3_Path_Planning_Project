@@ -150,6 +150,33 @@ src/CoordinateTransform.cpp.s:
 	$(MAKE) -f CMakeFiles/path_planning.dir/build.make CMakeFiles/path_planning.dir/src/CoordinateTransform.cpp.s
 .PHONY : src/CoordinateTransform.cpp.s
 
+src/GNB.o: src/GNB.cpp.o
+
+.PHONY : src/GNB.o
+
+# target to build an object file
+src/GNB.cpp.o:
+	$(MAKE) -f CMakeFiles/path_planning.dir/build.make CMakeFiles/path_planning.dir/src/GNB.cpp.o
+.PHONY : src/GNB.cpp.o
+
+src/GNB.i: src/GNB.cpp.i
+
+.PHONY : src/GNB.i
+
+# target to preprocess a source file
+src/GNB.cpp.i:
+	$(MAKE) -f CMakeFiles/path_planning.dir/build.make CMakeFiles/path_planning.dir/src/GNB.cpp.i
+.PHONY : src/GNB.cpp.i
+
+src/GNB.s: src/GNB.cpp.s
+
+.PHONY : src/GNB.s
+
+# target to generate assembly for a file
+src/GNB.cpp.s:
+	$(MAKE) -f CMakeFiles/path_planning.dir/build.make CMakeFiles/path_planning.dir/src/GNB.cpp.s
+.PHONY : src/GNB.cpp.s
+
 src/car.o: src/car.cpp.o
 
 .PHONY : src/car.o
@@ -243,6 +270,9 @@ help:
 	@echo "... src/CoordinateTransform.o"
 	@echo "... src/CoordinateTransform.i"
 	@echo "... src/CoordinateTransform.s"
+	@echo "... src/GNB.o"
+	@echo "... src/GNB.i"
+	@echo "... src/GNB.s"
 	@echo "... src/car.o"
 	@echo "... src/car.i"
 	@echo "... src/car.s"
