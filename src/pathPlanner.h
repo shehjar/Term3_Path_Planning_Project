@@ -31,7 +31,6 @@ class pathPlanner{
 	};
 	enum FSMStates {
 		KL,
-		PLC,
 		LCR,
 		LCL
 	};

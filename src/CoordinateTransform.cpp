@@ -8,7 +8,7 @@ CoordinateTransform::~CoordinateTransform()
 {
 }
 
-CoordinateTransform::CoordinateTransform(CoordinateTransform& coord):
+CoordinateTransform::CoordinateTransform(const CoordinateTransform& coord):
 	maps_x(coord.maps_x), maps_y(coord.maps_y), maps_s(coord.maps_s), maps_d_x(coord.maps_d_x), maps_d_y(coord.maps_d_y){}
 
 int CoordinateTransform::ClosestWaypoint(double x, double y) {
@@ -119,3 +119,12 @@ void CoordinateTransform::SetMaps(vector<double> maps_x, vector<double> maps_y, 
 	this->maps_d_x = maps_dx;
 	this->maps_d_y = maps_dy;
 }
+
+void CoordinateTransform::PrintData() {
+	cout << "maps_x has " << maps_x.size() << " elements." << endl;
+	cout << "maps_y has " << maps_y.size() << " elements." << endl;
+	cout << "maps_s has " << maps_s.size() << " elements." << endl;
+	cout << "maps_dx has " << maps_d_x.size() << " elements." << endl;
+	cout << "maps_dy has " << maps_d_y.size() << " elements." << endl;
+}
+

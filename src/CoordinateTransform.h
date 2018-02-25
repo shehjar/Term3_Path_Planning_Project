@@ -10,7 +10,7 @@ class CoordinateTransform
 {
 public:
 	CoordinateTransform();
-	CoordinateTransform(CoordinateTransform& coord);
+	CoordinateTransform(const CoordinateTransform& coord);
 	~CoordinateTransform();
 
 	// member Functions
@@ -20,7 +20,7 @@ public:
 	vector<double> getXY(double s, double d);
 	vector<double> getFrenetVelocities(double x, double y, double vx, double vy);
 	void SetMaps(vector<double> maps_x, vector<double> maps_y, vector<double> maps_s, vector<double> maps_dx, vector<double> maps_dy);
-	
+	void PrintData();
 	// member Variables
 	vector<double> maps_x;
 	vector<double> maps_y;

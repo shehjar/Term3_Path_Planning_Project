@@ -6,6 +6,7 @@ using namespace std;
 car::car(){
   v = 0;
   classifier = nullptr;
+  coord = nullptr;
 }
 
 car::car(const car& somecar){
@@ -23,6 +24,8 @@ car::car(const car& somecar){
 	lane = somecar.lane;
 	target_lane = somecar.target_lane;
 	id = somecar.id;
+	coord = new CoordinateTransform((*somecar.coord));
+	classifier = new GNB((*somecar.classifier));
 }
 
 car::~car(){
@@ -80,6 +83,24 @@ void car::UpdateVariables(car* new_car) {
 	d = new_car->d;
 	lane = (int)d / 4;
 	// Target lane shall be gotten by predict function
+	/*vector<double> frenet_vel = coord->getFrenetVelocities(x, y, vx, vy);
+	vector<double> data = { s, d, frenet_vel[0], frenet_vel[1] };
+	string pred = classifier->predict(data);
+	if (pred == classifier->possible_labels[0]) {
+		if (lane != 0)
+			target_lane = lane - 1;
+		else
+			target_lane = lane;
+	}
+	else if (pred == classifier->possible_labels[1]) {
+		target_lane = lane;
+	}
+	else {
+		if (lane != 3)
+			target_lane = lane + 1;
+		else
+			target_lane = lane;
+	}*/
 	target_lane = lane;
 }
 

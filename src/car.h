@@ -22,7 +22,7 @@ class car{
 		int lane; 
 	};
 	GNB* classifier;
-	CoordinateTransform coord;
+	CoordinateTransform* coord;
 	// Member functions
 	car();
 	~car();
@@ -31,10 +31,17 @@ class car{
 	void InitVariables(std::vector<double> sensor_info);
 	void UpdateVariables(car* new_car);
 	void UpdateVariables(double& car_x, double& car_y, double& car_yaw, double& car_s, double& car_d);
-	//void UpdateState(map<int,vector<prediction> > predictions);
 	void UpdateSpeed(double val);
-	void SetClassifier(GNB* predictor) { classifier = predictor; }
-	double distFromCar(car anotherCar);
+	void SetClassifier(GNB* predictor) { 
+		if (classifier == nullptr)
+			classifier = predictor; }
+	void SetCoordTransform(CoordinateTransform* axis) { 
+		if(coord==nullptr) 
+			coord = axis; }
+	double distFromCar(car anotherCar) {
+		return sqrt((anotherCar.x - x)*(anotherCar.x - x) +
+			(anotherCar.y - y)*(anotherCar.y - y));
+	}
 	bool collideWithCar(car anotherCar);
 	void PrintState();
 };
