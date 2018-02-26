@@ -7,6 +7,7 @@
 
 void pathPlanner::PopulatingMapWaypoints(string folderpath){
   ifstream in_map_(folderpath.c_str(), ifstream::in);
+  std::vector<double> map_waypoints_x, map_waypoints_y, map_waypoints_s, map_waypoints_dx, map_waypoints_dy;
 
   string line;
   while (getline(in_map_, line)) {
@@ -41,7 +42,7 @@ void pathPlanner::generate_trajectory(vector<double>& next_x_vals,
   double ref_x = ego.x;
   double ref_y = ego.y;
   double ref_yaw = deg2rad(ego.yaw);
-  int lane = ego.lane;
+  int lane = ego.target_lane;
   double ref_vel = ego.v;
 
   // If previous size is almost empty
@@ -208,7 +209,7 @@ void pathPlanner::InitEgo(json& j) {
 	}
 	else {
 		// Initializing Ego for the first time
-		ego.InitVariables(car_x, car_y, car_yaw, car_s, car_d, ref_vel);
+		ego.InitVariables(car_x, car_y, car_yaw, car_s, car_d, REF_VEL);
 		ego.SetClassifier(&classifier);
 		ego.SetCoordTransform(&coord);
 	}
@@ -227,8 +228,6 @@ void pathPlanner::DetectingCollision() {
 	bool too_close = false;
 	double prev_size = previous_path_x.size();
 	for (auto& somecar : vehicles) {
-		//float d = somecar.d;
-		//if (d<(4 + 4 * ego.lane) && d>(4 * ego.lane)) {
 		if(somecar.lane == ego.lane){
 			double car_speed = somecar.v;
 			double car_s = somecar.s;
@@ -241,4 +240,29 @@ void pathPlanner::DetectingCollision() {
 	}
 	// based on collision, update speed
 	UpdateSpeed(too_close);
+}
+
+double pathPlanner::TotalCost( int& intended_lane) {
+	double cost = 0;
+	// Calculating the lane change cost
+	cost += W_LC * (1 - fabs(intended_lane - ego.lane) / (TOTAL_LANES - 1));
+	// Calculating the distance cost from the nearest car 
+	// Get nearest car in the front
+	double mindist = MAX_OBS_DIST;		// some max value
+	double min_vel = REF_VEL;
+	for (auto& somecar : vehicles) {
+		if ((somecar.lane == intended_lane)&&(somecar.s > ego.s)) {
+			// This car is in front of us
+			double dist = somecar.s - ego.s;
+			if (dist < mindist) {
+				mindist = dist;
+				if (somecar.v < REF_VEL)
+					min_vel = somecar.v;
+			}
+		}
+	}
+	cost += W_DIST * (1 - (MAX_OBS_DIST - mindist) / MAX_OBS_DIST);
+	// Calculating the velocity cost from the nearest car in the lane
+	cost += W_VEL * (1 - (REF_VEL - min_vel) / REF_VEL);
+	return cost;
 }

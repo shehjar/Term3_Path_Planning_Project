@@ -14,11 +14,14 @@
 #include "GNB.h"
 
 using json = nlohmann::json;
-const double ref_vel = 49.5;
-
+const double REF_VEL = 49.5;
+const double W_LC = 10;
+const double W_DIST = 10;
+const double W_VEL = 10;
+const int TOTAL_LANES = 3;
+const double MAX_OBS_DIST = 80;
 class pathPlanner{
   public:
-    std::vector<double> map_waypoints_x, map_waypoints_y, map_waypoints_s, map_waypoints_dx, map_waypoints_dy;
     std::vector<car> vehicles;
     car ego;
     json previous_path_x, previous_path_y;
@@ -46,7 +49,7 @@ class pathPlanner{
 	void InitializeAndUpdate(json& j);
 	void DetectingCollision();
 	FSMStates TransitionFunction();
-	double CostFunctions();
+	double TotalCost(int& intended_lane);
 	void UpdateSpeed(bool too_close);
 	void map2carCoord(vector<double>& ptsx, vector<double>& ptsy, vector<double> ref_state);
 };
