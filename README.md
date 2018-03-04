@@ -64,6 +64,21 @@ the path has processed since last time.
 
 A really helpful resource for doing this project and creating smooth trajectories was using http://kluge.in-chemnitz.de/opensource/spline/, the spline function is in a single hearder file is really easy to use.
 
+## Reflections
+
+The starter code had a very basic setup to connect to the simulator. I first worked on the trajectory generator part of the project where I generated a list of x and y coordinates
+for the vehicle to move in the given simulator. With the help of the walkthrough video, I was able to generate new paths using the frenet coordinates and the intended lane the vehicle 
+wants to take. A class called `CoordinateTransform` was created to make the coordinte transitions from cartesian to frenet and vice-versa. I built up the basic class of `car.h`, so that 
+I could then use this as a basis to get and store data of our vehicle named ego and the other surrounding vehicles too. The class `pathPlanner` stores this data and performs almost all the functions 
+of a finite state machine, collision detection and lane change. To start, I used sensor fusion data to build up the list of vehicles. The finite state machine formed had 3 states namely- Keep Lane, 
+Lane Change Left and Lane Change Right. The cost functions implemented were made with respect to the mobility of our car to change lanes, the available lane speed and the distance between the closest car 
+near ego. There is also a collision safety measure cost implemented which is just a hard constraint of whether there could be an expected collision. The costs are designed in such a way that the best 
+state will have the maximum cost. Going by the same logic, the best state is chosen and executed, such that ego's velocity and prospective lane changes are affected by the decisions taken by the finite 
+state machine.
+
+This project has been very challenging in terms of creating one's own algorithmic workflow. In the end I have a solution that works for now, but the decision making algorithm could be better by the addition
+of two more states, namely Prepare Lane Change Left and Prepare Lane Change Right. This would make the state transitions more optimum so that our car ego is able to maneuver at the speed of 50 miles/hour.
+
 ---
 
 ## Dependencies
@@ -86,51 +101,3 @@ A really helpful resource for doing this project and creating smooth trajectorie
     cd uWebSockets
     git checkout e94b6e1
     ```
-
-## Editor Settings
-
-We've purposefully kept editor configuration files out of this repo in order to
-keep it as simple and environment agnostic as possible. However, we recommend
-using the following settings:
-
-* indent using spaces
-* set tab width to 2 spaces (keeps the matrices in source code aligned)
-
-## Code Style
-
-Please (do your best to) stick to [Google's C++ style guide](https://google.github.io/styleguide/cppguide.html).
-
-## Project Instructions and Rubric
-
-Note: regardless of the changes you make, your project must be buildable using
-cmake and make!
-
-
-## Call for IDE Profiles Pull Requests
-
-Help your fellow students!
-
-We decided to create Makefiles with cmake to keep this project as platform
-agnostic as possible. Similarly, we omitted IDE profiles in order to ensure
-that students don't feel pressured to use one IDE or another.
-
-However! I'd love to help people get up and running with their IDEs of choice.
-If you've created a profile for an IDE that you think other students would
-appreciate, we'd love to have you add the requisite profile files and
-instructions to ide_profiles/. For example if you wanted to add a VS Code
-profile, you'd add:
-
-* /ide_profiles/vscode/.vscode
-* /ide_profiles/vscode/README.md
-
-The README should explain what the profile does, how to take advantage of it,
-and how to install it.
-
-Frankly, I've never been involved in a project with multiple IDE profiles
-before. I believe the best way to handle this would be to keep them out of the
-repo root to avoid clutter. My expectation is that most profiles will include
-instructions to copy files to a new location to get picked up by the IDE, but
-that's just a guess.
-
-One last note here: regardless of the IDE used, every submitted project must
-still be compilable with cmake and make./
