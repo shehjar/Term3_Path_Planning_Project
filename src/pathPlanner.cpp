@@ -256,8 +256,8 @@ double pathPlanner::TotalCost( int& intended_lane) {
 			double dist = somecar.s - ego.s;
 			if (dist < mindist) {
 				mindist = dist;
-				if (somecar.v < REF_VEL)
-					min_vel = somecar.v;
+				//if (somecar.v < REF_VEL)
+				min_vel = somecar.v;
 			}
 		}
 	}
@@ -265,4 +265,104 @@ double pathPlanner::TotalCost( int& intended_lane) {
 	// Calculating the velocity cost from the nearest car in the lane
 	cost += W_VEL * (1 - (REF_VEL - min_vel) / REF_VEL);
 	return cost;
+}
+
+vector<pathPlanner::FSMStates> pathPlanner::SuccessorStates() {
+	vector<FSMStates> resulting_states;
+	switch (CurrentState)
+	{
+	case pathPlanner::KL:
+		if (ego.lane != 0 && ego.lane != 2) {
+			resulting_states.push_back(KL);
+			resulting_states.push_back(LCR);
+			resulting_states.push_back(LCL);
+		}
+		else if (ego.lane == 0) {
+			resulting_states.push_back(KL);
+			resulting_states.push_back(LCR);
+		}
+		else if (ego.lane == 2) {
+			resulting_states.push_back(KL);
+			resulting_states.push_back(LCL);
+		}
+		break;
+	case pathPlanner::LCR:
+		resulting_states.push_back(KL);
+		if (ego.lane != 2)
+			resulting_states.push_back(LCR);
+		break;
+	case pathPlanner::LCL:
+		resulting_states.push_back(KL);
+		if (ego.lane != 0)
+			resulting_states.push_back(LCL);
+		break;
+	default:
+		resulting_states.push_back(KL);
+		break;
+	}
+	return resulting_states;
+}
+
+void pathPlanner::TransitionFunction() {
+	vector<FSMStates> resulting_states = SuccessorStates();
+	vector<double> costs;
+	// browsing through all the states
+	for (size_t i = 0; i < resulting_states.size(); ++i) {
+		FSMStates State = resulting_states[i];
+		double cost = 0;
+		int intended_lane;
+		switch (State)
+		{
+		case pathPlanner::KL:
+			intended_lane = ego.lane;
+			break;
+		case pathPlanner::LCR:
+			intended_lane = ego.lane + 1;
+			break;
+		case pathPlanner::LCL:
+			intended_lane = ego.lane - 1;
+			break;
+		default:
+			intended_lane = ego.lane;
+			break;
+		}
+		cost += TotalCost(intended_lane);
+		costs.push_back(cost);
+	}
+	//Get best state with maximum costs and assign to CurrentState
+	int argmax = std::distance(costs.begin(), std::max_element(costs.begin(), costs.end()));
+	CurrentState = resulting_states[argmax];
+}
+
+double pathPlanner::GetLaneSpeed(int& lane) {
+	double min_vel = REF_VEL;
+	for (auto& somecar : vehicles) {
+		if (somecar.lane == lane && somecar.s >= ego.s && fabs(somecar.s - ego.s) < MAX_OBS_DIST)
+			if (somecar.v < min_vel)
+				min_vel = somecar.v;
+	}
+	return min_vel;
+}
+
+void pathPlanner::ExecuteState() {
+	switch (CurrentState)
+	{
+	case pathPlanner::KL:
+		// assigning reference velocity and lane
+		ego.target_lane = ego.lane;
+		ego.ref_v = GetLaneSpeed(ego.target_lane);
+		break;
+	case pathPlanner::LCR:
+		ego.target_lane = ego.lane + 1;
+		ego.ref_v = GetLaneSpeed(ego.target_lane);
+		break;
+	case pathPlanner::LCL:
+		ego.target_lane = ego.lane - 1;
+		ego.ref_v = GetLaneSpeed(ego.target_lane);
+		break;
+	default:
+		break;
+	}
+	// Check for Collision and lower speed if this exists
+	DetectingCollision();
 }

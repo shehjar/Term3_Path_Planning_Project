@@ -367,11 +367,12 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\CoordinateTransform.cpp" />
+    <ClCompile Include="..\src\GNB.cpp" />
     <ClCompile Include="C:\Users\kauls\Documents\Self_Driving_Car\Term3_Path_Planning_Project\src\car.cpp" />
     <ClCompile Include="C:\Users\kauls\Documents\Self_Driving_Car\Term3_Path_Planning_Project\src\main.cpp" />
     <ClCompile Include="C:\Users\kauls\Documents\Self_Driving_Car\Term3_Path_Planning_Project\src\pathPlanner.cpp" />
     <ClInclude Include="..\src\CoordinateTransform.h" />
-    <ClInclude Include="C:\Users\kauls\Documents\Self_Driving_Car\Term3_Path_Planning_Project\src\Predict.h" />
+    <ClInclude Include="..\src\GNB.h" />
     <ClInclude Include="C:\Users\kauls\Documents\Self_Driving_Car\Term3_Path_Planning_Project\src\car.h" />
     <ClInclude Include="C:\Users\kauls\Documents\Self_Driving_Car\Term3_Path_Planning_Project\src\helper.h" />
     <ClInclude Include="C:\Users\kauls\Documents\Self_Driving_Car\Term3_Path_Planning_Project\src\pathPlanner.h" />

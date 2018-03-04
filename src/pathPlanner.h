@@ -48,8 +48,11 @@ class pathPlanner{
 	void InitEgo(json& j);
 	void InitializeAndUpdate(json& j);
 	void DetectingCollision();
-	FSMStates TransitionFunction();
+	void TransitionFunction();
+	vector<FSMStates> SuccessorStates();
 	double TotalCost(int& intended_lane);
+	void ExecuteState();
+	double GetLaneSpeed(int& lane);
 	void UpdateSpeed(bool too_close);
 	void map2carCoord(vector<double>& ptsx, vector<double>& ptsy, vector<double> ref_state);
 };

@@ -53,8 +53,12 @@ int main() {
 			// Main car's localization Data
 			// Initialize Ego
 			planner.InitializeAndUpdate(j);
+			// Checking FSM for possible lane change
+			planner.TransitionFunction();
+			// Execute State function and adjust speed, if collision.
+			planner.ExecuteState();
 			// Detect Collision and act accordingly
-			planner.DetectingCollision();
+			//planner.DetectingCollision();
           // change the value of lane to change the trajectory below--
           // define a path made up of (x,y) points that the car will visit sequentially every .02 seconds
           vector<double> next_x_vals, next_y_vals;
