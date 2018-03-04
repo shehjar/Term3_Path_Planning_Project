@@ -264,6 +264,9 @@ double pathPlanner::TotalCost( int& intended_lane) {
 	cost += W_DIST * (1 - (MAX_OBS_DIST - mindist) / MAX_OBS_DIST);
 	// Calculating the velocity cost from the nearest car in the lane
 	cost += W_VEL * (1 - (REF_VEL - min_vel) / REF_VEL);
+	// Check safety of the intended lane 
+	if (!CheckSafety(intended_lane))
+		cost += -99;			// Hard cost factor for expected collision
 	return cost;
 }
 
@@ -365,4 +368,23 @@ void pathPlanner::ExecuteState() {
 	}
 	// Check for Collision and lower speed if this exists
 	DetectingCollision();
+}
+
+bool pathPlanner::CheckSafety(int lane) {
+	bool safe = true;
+	for (auto& somecar : vehicles) {
+		if (somecar.lane == lane) {
+			// check if the car is in a danger area in front of ego
+			bool danger_front = (somecar.s > ego.s) && (fabs(somecar.s - ego.s) < 10);
+			// check if the car is in a danger area behind ego
+			bool danger_behind = (somecar.s < ego.s) && (fabs(somecar.s - ego.s) < 20);
+			// check if the car behind has a higher velocity than ego
+			bool danger_velocity = (somecar.s < ego.s) && (fabs(somecar.s - ego.s) < 25) && (somecar.v > ego.v);
+			if (danger_front || danger_behind || danger_velocity) {
+				safe = false;
+				break;
+			}
+		}
+	}
+	return safe;
 }

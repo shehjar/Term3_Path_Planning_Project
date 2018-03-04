@@ -48,6 +48,7 @@ class pathPlanner{
 	void InitEgo(json& j);
 	void InitializeAndUpdate(json& j);
 	void DetectingCollision();
+	bool CheckSafety(int lane);
 	void TransitionFunction();
 	vector<FSMStates> SuccessorStates();
 	double TotalCost(int& intended_lane);
