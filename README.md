@@ -69,15 +69,22 @@ A really helpful resource for doing this project and creating smooth trajectorie
 The starter code had a very basic setup to connect to the simulator. I first worked on the trajectory generator part of the project where I generated a list of x and y coordinates
 for the vehicle to move in the given simulator. With the help of the walkthrough video, I was able to generate new paths using the frenet coordinates and the intended lane the vehicle 
 wants to take. A class called `CoordinateTransform` was created to make the coordinte transitions from cartesian to frenet and vice-versa. I built up the basic class of `car.h`, so that 
-I could then use this as a basis to get and store data of our vehicle named ego and the other surrounding vehicles too. The class `pathPlanner` stores this data and performs almost all the functions 
-of a finite state machine, collision detection and lane change. To start, I used sensor fusion data to build up the list of vehicles. The finite state machine formed had 3 states namely- Keep Lane, 
-Lane Change Left and Lane Change Right. The cost functions implemented were made with respect to the mobility of our car to change lanes, the available lane speed and the distance between the closest car 
-near ego. There is also a collision safety measure cost implemented which is just a hard constraint of whether there could be an expected collision. The costs are designed in such a way that the best 
-state will have the maximum cost. Going by the same logic, the best state is chosen and executed, such that ego's velocity and prospective lane changes are affected by the decisions taken by the finite 
-state machine.
+I could then use this as a basis to get and store data of our vehicle named ego and the other surrounding vehicles too. 
+
+The class `pathPlanner` stores this data and performs almost all the functions 
+of a finite state machine, collision detection and speed, maximum accelaration and jerk avoidance strategy. To start, I used sensor fusion data to build up the list of surrounding vehicles. 
+The finite state machine had 3 states defined namely- Keep Lane, 
+Lane Change Left and Lane Change Right. The cost functions implemented for each state were made with respect to the mobility of our car ego to change lanes, the available lane speed and the distance 
+between the closest car near ego. This was given a soft constraint as a weight multiplied by the ratio of optimum performance. There is also a collision safety measure cost implemented which is just 
+a hard constraint of -99 being added to the cost if there could be an expected collision for the  given state. The costs are designed in such a way that the best 
+state will have the maximum cost. Going by the same logic, the best state is chosen and executed, such that ego's velocity and prospective lane changes are affected 
+by the decisions taken by the finite state machine. In case of collisions, the reference velocity of ego is changed to the velocity of the leading car in the given lane. This makes the car make tiny transitions 
+of adding or subtracting a small value of 0.4 of the current speed of ego, such that it goes till the given reference velocity assigned. This small value of changed velocity also does not cause any maximum 
+accelaration or jerk.
 
 This project has been very challenging in terms of creating one's own algorithmic workflow. In the end I have a solution that works for now, but the decision making algorithm could be better by the addition
-of two more states, namely Prepare Lane Change Left and Prepare Lane Change Right. This would make the state transitions more optimum so that our car ego is able to maneuver at the speed of 50 miles/hour.
+of two more states, namely Prepare Lane Change Left and Prepare Lane Change Right. This would make the state transitions more optimum so that our car ego is able to maneuver to the optimum lane at the optimum 
+speed of 50 miles/hour.
 
 ---
 
